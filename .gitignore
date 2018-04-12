@@ -1,0 +1,10 @@
+etc/
+asset/
+data/
+corpora/
+logdir/
+samples/
+*.pyc
+_*
+.idea/
+**/.idea/
