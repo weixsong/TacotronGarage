@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#/usr/bin/python2
+
 '''
 By kyubyong park. kbpark.linguist@gmail.com. 
 https://www.github.com/kyubyong/tacotron
@@ -12,8 +12,8 @@ import re
 import os
 import codecs
 import unicodedata
-from utils import *
-from hyperparams import Hyperparams as hp
+from .utils import *
+from .hyperparams import Hyperparams as hp
 import numpy as np
 import tensorflow as tf
 

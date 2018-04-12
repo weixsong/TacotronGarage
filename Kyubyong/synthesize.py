@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# /usr/bin/python2
+
 '''
 By kyubyong park. kbpark.linguist@gmail.com.
 https://www.github.com/kyubyong/tacotron
@@ -7,29 +7,32 @@ https://www.github.com/kyubyong/tacotron
 
 from __future__ import print_function
 
-from hyperparams import Hyperparams as hp
+from .hyperparams import Hyperparams as hp
 import tqdm
-from data_load import load_data
+from .data_load import load_data
 import tensorflow as tf
-from train import TacotronGraph
-from utils import spectrogram2wav
+from .train import TacotronGraph
+from .utils import spectrogram2wav
 from scipy.io.wavfile import write
 import os
 import numpy as np
 
 
 def synthesize():
-    if not os.path.exists(hp.sampledir): os.mkdir(hp.sampledir)
+    if not os.path.exists(hp.sampledir):
+        os.mkdir(hp.sampledir)
 
     # Load graph
-    g = TacotronGraph(mode="synthesize"); print("Graph loaded")
+    g = TacotronGraph(mode="synthesize")
+    print("Graph loaded")
 
     # Load data
     texts = load_data(mode="synthesize")
 
     saver = tf.train.Saver()
     with tf.Session() as sess:
-        saver.restore(sess, tf.train.latest_checkpoint(hp.logdir)); print("Restored!")
+        saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
+        print("Restored!")
 
         # Feed Forward
         ## mel
@@ -44,7 +47,7 @@ def synthesize():
             audio = spectrogram2wav(mag)
             write(os.path.join(hp.sampledir, '{}.wav'.format(i+1)), hp.sr, audio)
 
+
 if __name__ == '__main__':
     synthesize()
     print("Done")
-

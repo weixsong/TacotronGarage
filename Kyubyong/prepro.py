@@ -11,8 +11,8 @@ from __future__ import print_function
 import os
 import numpy as np
 import tqdm
-from data_load import load_data
-from utils import load_spectrograms
+from .data_load import load_data
+from .utils import load_spectrograms
 
 # Load data
 fpaths, _, _ = load_data()  # list

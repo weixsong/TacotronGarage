@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#/usr/bin/python2
+
 '''
 By kyubyong park. kbpark.linguist@gmail.com. 
 https://www.github.com/kyubyong/tacotron
@@ -8,11 +8,11 @@ https://www.github.com/kyubyong/tacotron
 from __future__ import print_function
 
 from tqdm import tqdm
-from data_load import get_batch, load_vocab
-from modules import *
-from networks import encoder, attention, decoder
-from utils import *
-from hyperparams import Hyperparams as hp
+from Kyubyong.data_load import get_batch, load_vocab
+from Kyubyong.modules import *
+from Kyubyong.networks import encoder, decoder, postnet
+from Kyubyong.utils import *
+from Kyubyong.hyperparams import Hyperparams as hp
 import tensorflow as tf
 
 
@@ -50,12 +50,12 @@ class TacotronGraph:
             # Encoder
             self.memory = encoder(self.encoder_inputs, is_training=is_training)  # (N, T_x, E)
 
-            # Decoder1
-            self.y_hat, self.alignments = attention(self.decoder_inputs,
-                                                    self.memory,
-                                                    is_training=is_training)  # (N, T_y//r, n_mels*r)
-            # Decoder2 or postprocessing
-            self.z_hat = decoder(self.y_hat, is_training=is_training)  # (N, T_y//r, (1+n_fft//2)*r)
+            # Decoder
+            self.y_hat, self.alignments = decoder(self.decoder_inputs,
+                                                  self.memory,
+                                                  is_training=is_training)  # (N, T_y//r, n_mels*r)
+            # Postnet
+            self.z_hat = postnet(self.y_hat, is_training=is_training)  # (N, T_y//r, (1+n_fft//2)*r)
 
         # monitor
         self.audio = tf.py_func(spectrogram2wav, [self.z_hat[0]], tf.float32)

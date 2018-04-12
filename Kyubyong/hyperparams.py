@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 '''
 By kyubyong park. kbpark.linguist@gmail.com. 
 https://www.github.com/kyubyong/tacotron

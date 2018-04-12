@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-# /usr/bin/python2
+
 '''
 By kyubyong park. kbpark.linguist@gmail.com.
 https://www.github.com/kyubyong/dc_tts
 '''
+
 from __future__ import print_function, division
 
-from hyperparams import Hyperparams as hp
+from .hyperparams import Hyperparams as hp
 import numpy as np
 import tensorflow as tf
 import librosa
