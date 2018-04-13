@@ -43,7 +43,7 @@ class Hyperparams:
 
     # training scheme
     lr = 0.001  # Initial learning rate.
-    logdir = "logdir/01"
+    logdir = r"D:\tacotron\opensource\TacotronGarage\Kyubyong\logdir\01"
     sampledir = 'samples'
     batch_size = 32
     epochs = 200

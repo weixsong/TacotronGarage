@@ -7,12 +7,12 @@ https://www.github.com/kyubyong/tacotron
 
 from __future__ import print_function
 
-from .hyperparams import Hyperparams as hp
+from Kyubyong.hyperparams import Hyperparams as hp
 import tqdm
-from .data_load import load_data
+from Kyubyong.data_load import load_data
 import tensorflow as tf
-from .train import TacotronGraph
-from .utils import spectrogram2wav
+from Kyubyong.train import TacotronGraph
+from Kyubyong.utils import spectrogram2wav
 from scipy.io.wavfile import write
 import os
 import numpy as np
@@ -40,6 +40,7 @@ def synthesize():
         for j in tqdm.tqdm(range(200)):
             _y_hat = sess.run(g.y_hat, {g.x: texts, g.y: y_hat})
             y_hat[:, j, :] = _y_hat[:, j, :]
+
         ## mag
         mags = sess.run(g.z_hat, {g.y_hat: y_hat})
         for i, mag in enumerate(mags):

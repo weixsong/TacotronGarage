@@ -7,10 +7,10 @@ https://www.github.com/kyubyong/tacotron
 
 from __future__ import print_function
 
-from .hyperparams import Hyperparams as hp
-from .data_load import load_data
-from .train import TacotronGraph
-from .utils import load_spectrograms
+from Kyubyong.hyperparams import Hyperparams as hp
+from Kyubyong.data_load import load_data
+from Kyubyong.train import TacotronGraph
+from Kyubyong.utils import load_spectrograms
 import numpy as np
 import tensorflow as tf
 
@@ -24,7 +24,7 @@ def eval():
     fpaths, text_lengths, texts = load_data(mode="eval")
 
     # Parse
-    text = np.fromstring(texts[0], np.int32) # (None,)
+    text = np.fromstring(texts[0], np.int32)  # (None,)
     fname, mel, mag = load_spectrograms(fpaths[0])
 
     x = np.expand_dims(text, 0)  # (1, None)
@@ -42,7 +42,8 @@ def eval():
         # mel
         y_hat = np.zeros((1, y.shape[1], y.shape[2]), np.float32)  # hp.n_mels*hp.r
         for j in range(y.shape[1]):
-            _y_hat = sess.run(g.y_hat, {g.x: x, g.y: y_hat})
+            _y_hat = sess.run(g.y_hat, {g.x: x,
+                                        g.y: y_hat})
             y_hat[:, j, :] = _y_hat[:, j, :]
 
         # mag
