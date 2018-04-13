@@ -43,6 +43,7 @@ def get_spectrograms(fpath):
 
     # magnitude spectrogram
     mag = np.abs(linear)  # (1+n_fft//2, T)
+    # mag = np.abs(linear ** 2)  # (1+n_fft//2, T), should it be energy?
 
     # mel spectrogram
     mel_basis = librosa.filters.mel(hp.sr, hp.n_fft, hp.n_mels)  # (n_mels, 1+n_fft//2)
