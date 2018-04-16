@@ -27,6 +27,7 @@ class TacoTestHelper(Helper):
     return (tf.tile([False], [self._batch_size]), _go_frames(self._batch_size, self._output_dim))
 
   def sample(self, time, outputs, state, name=None):
+    # in Tacotron decoder, no need to sample
     return tf.tile([0], [self._batch_size])  # Return all 0; we ignore them
 
   def next_inputs(self, time, outputs, state, sample_ids, name=None):
@@ -80,4 +81,3 @@ class TacoTrainingHelper(Helper):
 def _go_frames(batch_size, output_dim):
   '''Returns all-zero <GO> frames for a given batch size and output dimension'''
   return tf.tile([[0.0]], [batch_size, output_dim])
-

@@ -13,7 +13,6 @@ class Tacotron():
   def __init__(self, hparams):
     self._hparams = hparams
 
-
   def initialize(self, inputs, input_lengths, mel_targets=None, linear_targets=None):
     '''Initializes the model for inference.
 
@@ -105,7 +104,6 @@ class Tacotron():
       log('  postnet out:             %d' % post_outputs.shape[-1])
       log('  linear out:              %d' % linear_outputs.shape[-1])
 
-
   def add_loss(self):
     '''Adds loss to the model. Sets "loss" field. initialize must have been called.'''
     with tf.variable_scope('loss') as scope:
@@ -116,7 +114,6 @@ class Tacotron():
       n_priority_freq = int(3000 / (hp.sample_rate * 0.5) * hp.num_freq)
       self.linear_loss = 0.5 * tf.reduce_mean(l1) + 0.5 * tf.reduce_mean(l1[:,:,0:n_priority_freq])
       self.loss = self.mel_loss + self.linear_loss
-
 
   def add_optimizer(self, global_step):
     '''Adds optimizer. Sets "gradients" and "optimize" fields. add_loss must have been called.
@@ -143,7 +140,7 @@ class Tacotron():
 
 
 def _learning_rate_decay(init_lr, global_step):
-  # Noam scheme from tensor2tensor:
-  warmup_steps = 4000.0
-  step = tf.cast(global_step + 1, dtype=tf.float32)
-  return init_lr * warmup_steps**0.5 * tf.minimum(step * warmup_steps**-1.5, step**-0.5)
+    # Noam scheme from tensor2tensor:
+    warmup_steps = 4000.0
+    step = tf.cast(global_step + 1, dtype=tf.float32)
+    return init_lr * warmup_steps**0.5 * tf.minimum(step * warmup_steps**-1.5, step**-0.5)

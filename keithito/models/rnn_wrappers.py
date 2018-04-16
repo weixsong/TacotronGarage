@@ -27,7 +27,6 @@ class DecoderPrenetWrapper(RNNCell):
     return self._cell.zero_state(batch_size, dtype)
 
 
-
 class ConcatOutputAndAttentionWrapper(RNNCell):
   '''Concatenates RNN cell output with the attention context vector.
 
