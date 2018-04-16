@@ -1,8 +1,8 @@
 import argparse
 import os
 import re
-from hparams import hparams, hparams_debug_string
-from synthesizer import Synthesizer
+from keithito.hparams import hparams, hparams_debug_string
+from keithito.synthesizer import Synthesizer
 
 
 sentences = [

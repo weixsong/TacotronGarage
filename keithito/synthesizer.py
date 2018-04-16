@@ -2,7 +2,6 @@ import io
 import numpy as np
 import tensorflow as tf
 from keithito.hparams import hparams
-from librosa import effects
 from keithito.models import create_model
 from keithito.text import text_to_sequence
 from keithito.util import audio

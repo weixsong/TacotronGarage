@@ -1,8 +1,8 @@
 import argparse
 import falcon
-from hparams import hparams, hparams_debug_string
+from keithito.hparams import hparams, hparams_debug_string
 import os
-from synthesizer import Synthesizer
+from keithito.synthesizer import Synthesizer
 
 
 html_body = '''<html><title>Demo</title>
