@@ -1,10 +1,9 @@
 import librosa
 import librosa.filters
-import math
 import numpy as np
 import tensorflow as tf
 from scipy import signal
-from hparams import hparams
+from keithito.hparams import hparams
 
 
 def load_wav(path):
