@@ -1,5 +1,5 @@
 import io
-from text import cmudict
+from keithito.text import cmudict
 
 
 test_data = '''

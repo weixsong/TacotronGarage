@@ -1,5 +1,4 @@
-from text import cleaners, symbols, text_to_sequence, sequence_to_text
-from unidecode import unidecode
+from keithito.text import cleaners, symbols, text_to_sequence, sequence_to_text
 
 
 def test_symbols():
