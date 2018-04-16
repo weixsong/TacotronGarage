@@ -10,3 +10,9 @@ I did name_scope & variable_scope rename for the network structure, so restore f
 
 # keithito/tacotron
 This Repo is forked from [keithito/tacotron](https://github.com/keithito/tacotron), great thanks to [keithito](https://github.com/keithito/tacotron) excellent work. 
+
+# riverphoenix/tacotron2
+This Repo is forked from [riverphoenix/tacotron2](https://github.com/riverphoenix/tacotron2), is open source implemenation of Tacotron2.
+
+# Rayhane-mamah/Tacotron-2
+this Repo is forked from [Rayhane-mamah/Tacotron-2](https://github.com/Rayhane-mamah/Tacotron-2), open source implementation of Tacotron2.
