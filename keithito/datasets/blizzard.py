@@ -2,8 +2,8 @@ from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 import numpy as np
 import os
-from hparams import hparams
-from util import audio
+from keithito.hparams import hparams
+from keithito.util import audio
 
 
 _max_out_length = 700

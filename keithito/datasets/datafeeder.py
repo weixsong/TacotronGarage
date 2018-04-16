@@ -5,8 +5,8 @@ import tensorflow as tf
 import threading
 import time
 import traceback
-from text import cmudict, text_to_sequence
-from util.infolog import log
+from keithito.text import cmudict, text_to_sequence
+from keithito.util.infolog import log
 
 
 _batches_per_group = 32
