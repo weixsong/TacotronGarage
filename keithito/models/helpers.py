@@ -24,7 +24,7 @@ class TacoTestHelper(Helper):
     return np.int32
 
   def initialize(self, name=None):
-    return (tf.tile([False], [self._batch_size]), _go_frames(self._batch_size, self._output_dim))
+    return tf.tile([False], [self._batch_size]), _go_frames(self._batch_size, self._output_dim)
 
   def sample(self, time, outputs, state, name=None):
     # in Tacotron decoder, no need to sample
@@ -36,7 +36,7 @@ class TacoTestHelper(Helper):
       finished = tf.reduce_all(tf.equal(outputs, self._end_token), axis=1)
       # Feed last output frame as next input. outputs is [N, output_dim * r]
       next_inputs = outputs[:, -self._output_dim:]
-      return (finished, next_inputs, state)
+      return finished, next_inputs, state
 
 
 class TacoTrainingHelper(Helper):
@@ -66,16 +66,17 @@ class TacoTrainingHelper(Helper):
     return np.int32
 
   def initialize(self, name=None):
-    return (tf.tile([False], [self._batch_size]), _go_frames(self._batch_size, self._output_dim))
+    return tf.tile([False], [self._batch_size]), _go_frames(self._batch_size, self._output_dim)
 
   def sample(self, time, outputs, state, name=None):
     return tf.tile([0], [self._batch_size])  # Return all 0; we ignore them
 
   def next_inputs(self, time, outputs, state, sample_ids, name=None):
+    # time: is current time step, need to compute input for time t+1
     with tf.name_scope(name or 'TacoTrainingHelper'):
       finished = (time + 1 >= self._lengths)
       next_inputs = self._targets[:, time, :]
-      return (finished, next_inputs, state)
+      return finished, next_inputs, state
 
 
 def _go_frames(batch_size, output_dim):

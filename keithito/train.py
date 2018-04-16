@@ -1,18 +1,17 @@
 import argparse
 from datetime import datetime
 import math
-import numpy as np
 import os
 import subprocess
 import time
 import tensorflow as tf
 import traceback
 
-from datasets.datafeeder import DataFeeder
-from hparams import hparams, hparams_debug_string
-from models import create_model
-from text import sequence_to_text
-from util import audio, infolog, plot, ValueWindow
+from keithito.datasets.datafeeder import DataFeeder
+from keithito.hparams import hparams, hparams_debug_string
+from keithito.models import create_model
+from keithito.text import sequence_to_text
+from keithito.util import audio, infolog, plot, ValueWindow
 log = infolog.log
 
 

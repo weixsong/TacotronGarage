@@ -1,12 +1,11 @@
 import tensorflow as tf
 from tensorflow.contrib.rnn import GRUCell, MultiRNNCell, OutputProjectionWrapper, ResidualWrapper
 from tensorflow.contrib.seq2seq import BasicDecoder, BahdanauAttention, AttentionWrapper
-from text.symbols import symbols
-from util.infolog import log
+from keithito.text.symbols import symbols
+from keithito.util.infolog import log
 from .helpers import TacoTestHelper, TacoTrainingHelper
 from .modules import encoder_cbhg, post_cbhg, prenet
 from .rnn_wrappers import DecoderPrenetWrapper, ConcatOutputAndAttentionWrapper
-
 
 
 class Tacotron():
@@ -127,6 +126,7 @@ class Tacotron():
         self.learning_rate = _learning_rate_decay(hp.initial_learning_rate, global_step)
       else:
         self.learning_rate = tf.convert_to_tensor(hp.initial_learning_rate)
+
       optimizer = tf.train.AdamOptimizer(self.learning_rate, hp.adam_beta1, hp.adam_beta2)
       gradients, variables = zip(*optimizer.compute_gradients(self.loss))
       self.gradients = gradients

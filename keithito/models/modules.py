@@ -29,39 +29,39 @@ def cbhg(inputs, input_lengths, is_training, scope, K, projections):
                                       for k in range(1, K+1)],
                                      axis=-1)
 
-    # Maxpooling:
-    maxpool_output = tf.layers.max_pooling1d(conv_outputs,
-                                             pool_size=2,
-                                             strides=1,
-                                             padding='same')
+        # Maxpooling:
+        maxpool_output = tf.layers.max_pooling1d(conv_outputs,
+                                                 pool_size=2,
+                                                 strides=1,
+                                                 padding='same')
 
-    # Two projection layers:
-    proj_output = conv1d(maxpool_output, 3, projections[0], tf.nn.relu, is_training, 'proj_1')
-    proj_output = conv1d(proj_output, 3, projections[1], None, is_training, 'proj_2')
+        # Two projection layers:
+        proj_output1 = conv1d(maxpool_output, 3, projections[0], tf.nn.relu, is_training, 'proj_1')
+        proj_output2 = conv1d(proj_output1, 3, projections[1], None, is_training, 'proj_2')
 
-    # Residual connection:
-    highway_input = proj_output + inputs
+        # Residual connection:
+        highway_input = proj_output2 + inputs
 
-    # Handle dimensionality mismatch:
-    if highway_input.shape[2] != 128:
-        highway_input = tf.layers.dense(highway_input, 128)
+        # Handle dimensionality mismatch:
+        if highway_input.shape[2] != 128:
+            highway_input = tf.layers.dense(highway_input, 128)
 
-    # 4-layer HighwayNet:
-    for i in range(4):
-        highway_input = highwaynet(highway_input, 'highway_%d' % (i+1))
+        # 4-layer HighwayNet:
+        for i in range(4):
+            highway_input = highwaynet(highway_input, 'highway_%d' % (i+1))
 
-    rnn_input = highway_input
+        rnn_input = highway_input
 
-    # Bidirectional RNN
-    cell_fw = GRUCell(128)
-    cell_bw = GRUCell(128)
-    outputs, states = tf.nn.bidirectional_dynamic_rnn(cell_fw,
-                                                      cell_bw,
-                                                      rnn_input,
-                                                      sequence_length=input_lengths,
-                                                      dtype=tf.float32)
+        # Bidirectional RNN
+        cell_fw = GRUCell(128)
+        cell_bw = GRUCell(128)
+        outputs, states = tf.nn.bidirectional_dynamic_rnn(cell_fw,
+                                                          cell_bw,
+                                                          rnn_input,
+                                                          sequence_length=input_lengths,
+                                                          dtype=tf.float32)
 
-    return tf.concat(outputs, axis=2)  # Concat forward and backward
+        return tf.concat(outputs, axis=2)  # Concat forward and backward
 
 
 def highwaynet(inputs, scope):
@@ -73,7 +73,7 @@ def highwaynet(inputs, scope):
                             name='T',
                             bias_initializer=tf.constant_initializer(-1.0))
 
-    return H * T + inputs * (1.0 - T)
+        return H * T + inputs * (1.0 - T)
 
 
 def conv1d(inputs, kernel_size, channels, activation, is_training, scope):
@@ -84,4 +84,4 @@ def conv1d(inputs, kernel_size, channels, activation, is_training, scope):
                                          activation=activation,
                                          padding='same')
 
-    return tf.layers.batch_normalization(conv1d_output, training=is_training)
+        return tf.layers.batch_normalization(conv1d_output, training=is_training)
