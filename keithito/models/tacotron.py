@@ -49,20 +49,20 @@ class Tacotron():
         DecoderPrenetWrapper(GRUCell(256), is_training),
         BahdanauAttention(256, encoder_outputs),
         alignment_history=True,
-        output_attention=False)                                                  # [N, T_in, 256]
+        output_attention=False)                                                  # [N, 256] for each query(B*d)
 
       # Concatenate attention context vector and RNN cell output into a 512D vector.
-      concat_cell = ConcatOutputAndAttentionWrapper(attention_cell)              # [N, T_in, 512]
+      concat_cell = ConcatOutputAndAttentionWrapper(attention_cell)              # [N, 512] for each query
 
       # Decoder (layers specified bottom to top):
       decoder_cell = MultiRNNCell([
           OutputProjectionWrapper(concat_cell, 256),
           ResidualWrapper(GRUCell(256)),
           ResidualWrapper(GRUCell(256))
-        ], state_is_tuple=True)                                                  # [N, T_in, 256]
+        ], state_is_tuple=True)                                                  # [N, 256] for each query
 
       # Project onto r mel spectrograms (predict r outputs at each RNN step):
-      output_cell = OutputProjectionWrapper(decoder_cell, hp.num_mels * hp.outputs_per_step)
+      output_cell = OutputProjectionWrapper(decoder_cell, hp.num_mels * hp.outputs_per_step)  # [N, num_mels*r]
       decoder_init_state = output_cell.zero_state(batch_size=batch_size, dtype=tf.float32)
 
       if is_training:
